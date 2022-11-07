@@ -5,20 +5,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const users = [];
-const tweets = [
-  {
-    username: "carlao",
-    tweet: "vamo jogar fute ?",
-  },
-  {
-    username: "carlao",
-    tweet: "fino seniores",
-  },
-  {
-    username: "joao da academia",
-    tweet: "to sem braço boy, ta pago",
-  },
-];
+const tweets = [];
 let avatarAtual = "";
 
 app.post("/sign-up", (req, res) => {
@@ -35,7 +22,15 @@ app.post("/tweets", (req, res) => {
 });
 
 app.get("/tweets", (req, res) => {
-  res.send(tweets);
+  console.log(tweets);
+  const lastTweets = [];
+  for (let i = tweets.length - 1; i >= 0; i--) {
+    if (lastTweets.length === 10) {
+      return;
+    }
+    lastTweets.push(tweets[i]);
+  }
+  res.send(lastTweets);
 });
 
 app.listen(5000);
